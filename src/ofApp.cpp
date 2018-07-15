@@ -8,11 +8,7 @@ void ofApp::setup(){
 
 	perspectivalGrid = generatePerspectivalGrid();
 	guideGrid = generateGuideGrid();
-
-
 }
-
-
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -21,8 +17,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	warper.begin();	
-	warper.draw(); 
+	warper.begin();
+	warper.draw();
 	switch (mode) {
 		case perspective:
 			perspectivalGrid.draw();
@@ -43,7 +39,7 @@ void ofApp::keyPressed(int key){
 	switch (key) {
 	case 'w':
 		if (warper.isActive()) {
-			warper.deactivate(); 
+			warper.deactivate();
 		}
 		else {
 			warper.activate();
@@ -106,12 +102,12 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
 ofPolyline ofApp::generatePerspectivalGrid() {
-	ofPolyline grid; 
+	ofPolyline grid;
 
 	ofPoint center;
 	float horizontalPos = ofGetWidth() / 2;
@@ -125,7 +121,7 @@ ofPolyline ofApp::generatePerspectivalGrid() {
 		r = ofGetHeight();
 	}
 
-	
+
 	while (i < TWO_PI) {
 		float x = horizontalPos + cos(i) * r;
 		float y = verticalPos + sin(i) * r;
@@ -141,25 +137,40 @@ ofPolyline ofApp::generatePerspectivalGrid() {
 }
 
 ofPolyline ofApp::generateGuideGrid() {
-	ofPolyline grid; 
+	ofPolyline grid;
 	int width = ofGetWidth();
-	int height = ofGetHeight(); 
-	int horizontalCount = 20; 
+	int height = ofGetHeight();
+	int horizontalCount = 20;
 	int horizontalSize = width / horizontalCount;
-	
-	int verticalCount = 10; 
+
+	int verticalCount = 10;
 	int verticalSize = height / verticalCount;
+
+	ofPoint leftTopCorner;
+	ofPoint rightTopCorner;
+	ofPoint rightBottomCorner;
+	ofPoint leftBottomCorner;
+
+	leftTopCorner.set(0,0);
+	rightTopCorner.set(width, 0);
+	rightBottomCorner.set(width, height);
+	leftBottomCorner.set(0, height);
+
+	grid.addVertex(leftTopCorner);
+	grid.addVertex(rightTopCorner);
+	grid.addVertex(rightBottomCorner);
+	grid.addVertex(leftBottomCorner);
 
 	int i = 0;
 	while (i < horizontalCount) {
 		float x = horizontalSize * i;
 		float y1 = 0;
 		float y2 = height;
-		ofPoint point1; 
+		ofPoint point1;
 		ofPoint point2;
 		point1.set(x, y1);
-		point2.set(x, y2); 
-		
+		point2.set(x, y2);
+
 		if (i % 2 == 0) {
 			grid.addVertex(point1);
 			grid.addVertex(point2);
