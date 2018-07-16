@@ -22,18 +22,27 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		ofPolyline generatePerspectivalGrid();
-		ofPolyline generateGuideGrid();
 
 		enum Mode {perspective, grid, img};
-
 		Mode mode = perspective;
 
 		ofxGLWarper warper;
+
+		ofPolyline generateGuideGrid(int hCount, int vCount);
+		int guideGridHCount;
+		int guideGridVCount;
+
+		ofPolyline generatePerspectivalGrid();
 		ofPolyline perspectivalGrid;
 		ofPolyline guideGrid;
+		void translatePerspectivalGrid(ofPoint vctr);
 
-		void processOpenFileSelection(ofFileDialogResult openFileResult);
+		bool SHIFTKEYPRESSED = false;
+		bool CTRLKEYPRESSED = false;
+
+		void handleArrowKeys(int key);
+
+		void loadImage(string filePath);
 		ofImage displayImage;
 
 

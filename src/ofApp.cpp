@@ -6,8 +6,10 @@ void ofApp::setup(){
 	warper.activate();
 	ofBackground(0, 0, 0);
 
+	loadImage("images/noimage.png");
+
 	perspectivalGrid = generatePerspectivalGrid();
-	guideGrid = generateGuideGrid();
+	guideGrid = generateGuideGrid(10,10);
 }
 
 //--------------------------------------------------------------
@@ -25,8 +27,10 @@ void ofApp::draw(){
 			break;
 		case grid:
 			guideGrid.draw();
+			break;
 		case img:
 			displayImage.draw(0,0);
+			break;
 		default:
 			break;
 	}
@@ -37,7 +41,22 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
+	// ofLog(OF_LOG_NOTICE, ofToString(key));
+
 	switch (key) {
+	case 1:
+		SHIFTKEYPRESSED = true;
+		break;
+	case 2:
+		CTRLKEYPRESSED = true;
+		break;
+	case OF_KEY_LEFT:
+	case OF_KEY_RIGHT:
+	case OF_KEY_DOWN:
+	case OF_KEY_UP:
+		handleArrowKeys(key);
+		break;
 	case 'w':
 		if (warper.isActive()) {
 			warper.deactivate();
@@ -60,7 +79,14 @@ void ofApp::keyPressed(int key){
 			{
 			ofFileDialogResult openFileResult=ofSystemLoadDialog("Select a jpg or png");
 			if (openFileResult.bSuccess){
-				processOpenFileSelection(openFileResult);
+				ofFile file (openFileResult.getPath());
+				if (file.exists()){
+					string fileExtension = ofToUpper(file.getExtension());
+					if (fileExtension == "JPG" || fileExtension == "PNG") {
+						loadImage(openFileResult.getPath());
+						mode = img;
+					}
+				}
 			}
 			break;
 		}
@@ -71,6 +97,16 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+
+	if(key == 3680 || key == 3681 ||key == 1){
+		ofLog(OF_LOG_NOTICE, "SHIFT KEY RELEASED");
+		SHIFTKEYPRESSED = false;
+	}
+
+	if(key == 3683 || key == 3682 || key == 2){
+		ofLog(OF_LOG_NOTICE, "CTRL KEY RELEASED");
+		CTRLKEYPRESSED = false;
+	}
 
 }
 
@@ -149,14 +185,22 @@ ofPolyline ofApp::generatePerspectivalGrid() {
 	return grid;
 }
 
-ofPolyline ofApp::generateGuideGrid() {
+void ofApp::translatePerspectivalGrid(ofPoint vctr) {
+	perspectivalGrid.translate(vctr);
+}
+
+ofPolyline ofApp::generateGuideGrid(int horizontalCount, int verticalCount) {
 	ofPolyline grid;
 	int width = ofGetWidth();
 	int height = ofGetHeight();
-	int horizontalCount = 20;
-	int horizontalSize = width / horizontalCount;
 
-	int verticalCount = 10;
+	// save the values for translations
+	// for later user
+	// @todo: refactor all modes into thier own classes
+	guideGridHCount = horizontalCount;
+	guideGridVCount = verticalCount;
+
+	int horizontalSize = width / horizontalCount;
 	int verticalSize = height / verticalCount;
 
 	ofPoint leftTopCorner;
@@ -221,35 +265,103 @@ ofPolyline ofApp::generateGuideGrid() {
 
 }
 
+void ofApp::loadImage(string filePath){
+	displayImage.load(filePath);
 
-void ofApp::processOpenFileSelection(ofFileDialogResult openFileResult){
-	ofFile file (openFileResult.getPath());
-	if (file.exists()){
+	displayImage.resize(ofGetWidth(), ofGetHeight());
+}
 
-		string fileExtension = ofToUpper(file.getExtension());
-		if (fileExtension == "JPG" || fileExtension == "PNG") {
-			displayImage.load(openFileResult.getPath());
-			displayImage.resize(500,500);
+// Each mode should handle Arrow Keys differently
+// @todo each mode needs to be abstracted out to its own class.
+// Once that is done the switch statement mess won't be necessary.
+void ofApp::handleArrowKeys(int key){
+	ofLog(OF_LOG_NOTICE, ofToString(key));
+	ofPoint translationVector;
+	switch (mode) {
+		case perspective:
+			{
+				switch (key) {
+					case OF_KEY_UP:
+						{
+							translationVector.set(0,-5);
+							translatePerspectivalGrid(translationVector);
+							break;
+						}
+					case OF_KEY_DOWN:
+						{
+							translationVector.set(0,5);
+							translatePerspectivalGrid(translationVector);
+							break;
+						}
+					case OF_KEY_LEFT:
+						{
+							translationVector.set(-5,0);
+							translatePerspectivalGrid(translationVector);
+							break;
+						}
+					case OF_KEY_RIGHT:
+						{
+							translationVector.set(5,0);
+							translatePerspectivalGrid(translationVector);
+							break;
+						}
+				}
+			}
+		case grid:
+			{
+				switch (key) {
+					case OF_KEY_UP:
+						{
+							guideGridVCount++;
+							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
+							break;
+						}
+					case OF_KEY_DOWN:
+						{
+							if(guideGridVCount < 1){
+								guideGridVCount = 0;
+							} else {
+								guideGridVCount--;
 
-			// int w = displayImage.getWidth();
-			// int h = displayImage.getHeight();
-			// int newRatio;
-			// int newHeight;
-			// int newWidth;
+							}
+							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
+							break;
+						}
+					case OF_KEY_LEFT:
+						{
+							if(guideGridHCount < 1){
+								guideGridHCount = 0;
+							} else {
+								guideGridHCount--;
 
-			// if(w > ofGetWidth()){
-			// 	newRatio = ofGetWidth() / w;
-			// 	newHeight = h * newRatio;
-			// 	newWidth = ofGetWidth();
-			// 	displayImage.resize(newWidth, newHeight);
-			// }
+							}
+							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
+							break;
+						}
 
-			// if(h > ofGetHeight()){
-			// 	newRatio = ofGetHeight() / h;
-			// 	newHeight = ofGetHeight();
-			// 	newWidth = w * newRatio;
-			// 	displayImage.resize(newWidth, newHeight);
-			// }
-		}
+					case OF_KEY_RIGHT:
+						{
+							guideGridHCount++;
+							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
+							break;
+						}
+				}
+				break;
+			}
+		case img:
+			{
+				switch (key) {
+					case OF_KEY_UP:
+							break;
+					case OF_KEY_DOWN:
+						break;
+					case OF_KEY_LEFT:
+						break;
+					case OF_KEY_RIGHT:
+						break;
+				}
+				break;
+			}
 	}
+
 }
