@@ -25,7 +25,8 @@ void ofApp::draw(){
 			break;
 		case grid:
 			guideGrid.draw();
-			break;
+		case img:
+			displayImage.draw(0,0);
 		default:
 			break;
 	}
@@ -51,6 +52,18 @@ void ofApp::keyPressed(int key){
 		break;
 	case 'g':
 		mode = grid;
+		break;
+	case 'i':
+		mode = img;
+		break;
+	case 'o':
+			{
+			ofFileDialogResult openFileResult=ofSystemLoadDialog("Select a jpg or png");
+			if (openFileResult.bSuccess){
+				processOpenFileSelection(openFileResult);
+			}
+			break;
+		}
 	default:
 		break;
 	}
@@ -206,4 +219,37 @@ ofPolyline ofApp::generateGuideGrid() {
 	grid.close();
 	return grid;
 
+}
+
+
+void ofApp::processOpenFileSelection(ofFileDialogResult openFileResult){
+	ofFile file (openFileResult.getPath());
+	if (file.exists()){
+
+		string fileExtension = ofToUpper(file.getExtension());
+		if (fileExtension == "JPG" || fileExtension == "PNG") {
+			displayImage.load(openFileResult.getPath());
+			displayImage.resize(500,500);
+
+			// int w = displayImage.getWidth();
+			// int h = displayImage.getHeight();
+			// int newRatio;
+			// int newHeight;
+			// int newWidth;
+
+			// if(w > ofGetWidth()){
+			// 	newRatio = ofGetWidth() / w;
+			// 	newHeight = h * newRatio;
+			// 	newWidth = ofGetWidth();
+			// 	displayImage.resize(newWidth, newHeight);
+			// }
+
+			// if(h > ofGetHeight()){
+			// 	newRatio = ofGetHeight() / h;
+			// 	newHeight = ofGetHeight();
+			// 	newWidth = w * newRatio;
+			// 	displayImage.resize(newWidth, newHeight);
+			// }
+		}
+	}
 }

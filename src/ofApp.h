@@ -25,7 +25,7 @@ class ofApp : public ofBaseApp{
 		ofPolyline generatePerspectivalGrid();
 		ofPolyline generateGuideGrid();
 
-		enum Mode {perspective, grid};
+		enum Mode {perspective, grid, img};
 
 		Mode mode = perspective;
 
@@ -33,5 +33,8 @@ class ofApp : public ofBaseApp{
 		ofPolyline perspectivalGrid;
 		ofPolyline guideGrid;
 
-		
+		void processOpenFileSelection(ofFileDialogResult openFileResult);
+		ofImage displayImage;
+
+
 };
