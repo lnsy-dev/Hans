@@ -19,6 +19,17 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	if(SHOWHELP){
+		stringstream ss;
+		ss << "(p): Perspective Mode"<<endl;
+		ss << "(g): Grid Mode"<<endl;
+		ss << "(i): Image Mode"<<endl;
+		ss << "(o): Open an Image" <<endl;
+		ss << "(w): Toggle Warp Corners" << endl;
+		ss << "(h): Toggle this dialog"<<endl;
+		ofDrawBitmapStringHighlight(ss.str().c_str(), 20, 20);
+	}
+
 	warper.begin();
 	warper.draw();
 	switch (mode) {
@@ -75,6 +86,9 @@ void ofApp::keyPressed(int key){
 	case 'i':
 		mode = img;
 		break;
+	case 'h':
+		SHOWHELP = !SHOWHELP;
+		break;
 	case 'o':
 			{
 			ofFileDialogResult openFileResult=ofSystemLoadDialog("Select a jpg or png");
@@ -99,12 +113,10 @@ void ofApp::keyPressed(int key){
 void ofApp::keyReleased(int key){
 
 	if(key == 3680 || key == 3681 ||key == 1){
-		ofLog(OF_LOG_NOTICE, "SHIFT KEY RELEASED");
 		SHIFTKEYPRESSED = false;
 	}
 
 	if(key == 3683 || key == 3682 || key == 2){
-		ofLog(OF_LOG_NOTICE, "CTRL KEY RELEASED");
 		CTRLKEYPRESSED = false;
 	}
 

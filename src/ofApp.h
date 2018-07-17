@@ -23,6 +23,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		void drawHelpText();
+		bool SHOWHELP = true;
+
 		enum Mode {perspective, grid, img};
 		Mode mode = perspective;
 
