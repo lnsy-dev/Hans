@@ -48,5 +48,6 @@ class ofApp : public ofBaseApp{
 		void loadImage(string filePath);
 		ofImage displayImage;
 
-
+		int windowWidth = 2736;
+		int windowHeight = 1824;
 };

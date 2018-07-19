@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	warper.setup(0, 0, ofGetWidth(), ofGetHeight()); //initializates ofxGLWarper
+	warper.setup(0, 0, windowWidth, windowHeight); //initializates ofxGLWarper
 	warper.activate();
 	ofBackground(0, 0, 0);
 
@@ -171,15 +171,15 @@ ofPolyline ofApp::generatePerspectivalGrid() {
 	ofPolyline grid;
 
 	ofPoint center;
-	float horizontalPos = ofGetWidth() / 2;
-	float verticalPos = ofGetHeight() / 2;
+	float horizontalPos = windowWidth / 2;
+	float verticalPos = windowHeight / 2;
 
 	center.set(horizontalPos, verticalPos);
 	float i = 0;
-	float r = ofGetWidth();
+	float r = windowWidth;
 
-	if (ofGetHeight() > ofGetWidth()) {
-		r = ofGetHeight();
+	if (windowHeight > windowWidth) {
+		r = windowHeight;
 	}
 
 
@@ -203,8 +203,8 @@ void ofApp::translatePerspectivalGrid(ofPoint vctr) {
 
 ofPolyline ofApp::generateGuideGrid(int horizontalCount, int verticalCount) {
 	ofPolyline grid;
-	int width = ofGetWidth();
-	int height = ofGetHeight();
+	int width = windowWidth;
+	int height = windowHeight;
 
 	// save the values for translations
 	// for later user
@@ -280,7 +280,7 @@ ofPolyline ofApp::generateGuideGrid(int horizontalCount, int verticalCount) {
 void ofApp::loadImage(string filePath){
 	displayImage.load(filePath);
 
-	displayImage.resize(ofGetWidth(), ofGetHeight());
+	displayImage.resize(windowWidth, windowHeight);
 }
 
 // Each mode should handle Arrow Keys differently
