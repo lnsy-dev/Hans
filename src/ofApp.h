@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "warper.h"
 #include "perspectivalGrid.h"
+#include "standardGrid.h"
 
 
 class ofApp : public ofBaseApp{
@@ -33,12 +34,7 @@ class ofApp : public ofBaseApp{
 		ofxGLWarper warper;
 
 		perspectivalGrid perspectiveGrid;
-
-		ofPolyline generateGuideGrid(int hCount, int vCount);
-		int guideGridHCount;
-		int guideGridVCount;
-
-		ofPolyline guideGrid;
+		standardGrid guideGrid;
 
 		bool SHIFTKEYPRESSED = false;
 		bool CTRLKEYPRESSED = false;

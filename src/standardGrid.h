@@ -1,9 +1,9 @@
 #pragma once
 #include "ofMain.h"
 
-class perspectivalGrid {
+class standardGrid {
   public:
-    void setup(int w, int h);
+    void setup(int w, int h, int horizontalCount, int verticalCount);
     void draw();
 
   private:

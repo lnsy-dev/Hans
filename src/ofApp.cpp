@@ -2,16 +2,17 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	windowWidth = ofGetWindowWidth();
+	windowHeight = ofGetWindowHeight();
 	warper.setup(0, 0, windowWidth, windowHeight); //initializates ofxGLWarper
 	warper.activate();
 
 	perspectiveGrid.setup(windowWidth, windowHeight);
+	guideGrid.setup(windowWidth, windowHeight, 10, 10);
 	ofBackground(0, 0, 0);
 
 	loadImage("images/noimage.png");
 
-
-	guideGrid = generateGuideGrid(10,10);
 }
 
 //--------------------------------------------------------------
@@ -169,81 +170,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-ofPolyline ofApp::generateGuideGrid(int horizontalCount, int verticalCount) {
-	ofPolyline grid;
-	int width = windowWidth;
-	int height = windowHeight;
-
-	// save the values for translations
-	// for later user
-	// @todo: refactor all modes into thier own classes
-	guideGridHCount = horizontalCount;
-	guideGridVCount = verticalCount;
-
-	int horizontalSize = width / horizontalCount;
-	int verticalSize = height / verticalCount;
-
-	ofPoint leftTopCorner;
-	ofPoint rightTopCorner;
-	ofPoint rightBottomCorner;
-	ofPoint leftBottomCorner;
-
-	leftTopCorner.set(0,0);
-	rightTopCorner.set(width, 0);
-	rightBottomCorner.set(width, height);
-	leftBottomCorner.set(0, height);
-
-	grid.addVertex(leftTopCorner);
-	grid.addVertex(rightTopCorner);
-	grid.addVertex(rightBottomCorner);
-	grid.addVertex(leftBottomCorner);
-
-	int i = 0;
-	while (i < horizontalCount) {
-		float x = horizontalSize * i;
-		float y1 = 0;
-		float y2 = height;
-		ofPoint point1;
-		ofPoint point2;
-		point1.set(x, y1);
-		point2.set(x, y2);
-
-		if (i % 2 == 0) {
-			grid.addVertex(point1);
-			grid.addVertex(point2);
-		}
-		else {
-			grid.addVertex(point2);
-			grid.addVertex(point1);
-		}
-		i++;
-	}
-
-	i = 0;
-	while (i < verticalCount) {
-		float y = verticalSize * i;
-		float x1 = 0;
-		float x2 = width;
-		ofPoint point1;
-		ofPoint point2;
-		point1.set(x1, y);
-		point2.set(x2, y);
-
-		if (i % 2 == 0) {
-			grid.addVertex(point1);
-			grid.addVertex(point2);
-		}
-		else {
-			grid.addVertex(point2);
-			grid.addVertex(point1);
-		}
-		i++;
-	}
-
-	grid.close();
-	return grid;
-
-}
 
 void ofApp::loadImage(string filePath){
 	displayImage.load(filePath);
@@ -257,63 +183,5 @@ void ofApp::loadImage(string filePath){
 void ofApp::handleArrowKeys(int key){
 	ofLog(OF_LOG_NOTICE, ofToString(key));
 	ofPoint translationVector;
-	switch (mode) {
-
-		case grid:
-			{
-				switch (key) {
-					case OF_KEY_UP:
-						{
-							guideGridVCount++;
-							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
-							break;
-						}
-					case OF_KEY_DOWN:
-						{
-							if(guideGridVCount < 1){
-								guideGridVCount = 0;
-							} else {
-								guideGridVCount--;
-
-							}
-							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
-							break;
-						}
-					case OF_KEY_LEFT:
-						{
-							if(guideGridHCount < 1){
-								guideGridHCount = 0;
-							} else {
-								guideGridHCount--;
-
-							}
-							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
-							break;
-						}
-
-					case OF_KEY_RIGHT:
-						{
-							guideGridHCount++;
-							guideGrid = generateGuideGrid(guideGridHCount, guideGridVCount);
-							break;
-						}
-				}
-				break;
-			}
-		case img:
-			{
-				switch (key) {
-					case OF_KEY_UP:
-							break;
-					case OF_KEY_DOWN:
-						break;
-					case OF_KEY_LEFT:
-						break;
-					case OF_KEY_RIGHT:
-						break;
-				}
-				break;
-			}
-	}
 
 }
