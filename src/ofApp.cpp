@@ -4,11 +4,13 @@
 void ofApp::setup(){
 	warper.setup(0, 0, windowWidth, windowHeight); //initializates ofxGLWarper
 	warper.activate();
+
+	perspectiveGrid.setup(windowWidth, windowHeight);
 	ofBackground(0, 0, 0);
 
 	loadImage("images/noimage.png");
 
-	perspectivalGrid = generatePerspectivalGrid();
+
 	guideGrid = generateGuideGrid(10,10);
 }
 
@@ -34,7 +36,7 @@ void ofApp::draw(){
 	warper.draw();
 	switch (mode) {
 		case perspective:
-			perspectivalGrid.draw();
+			perspectiveGrid.draw();
 			break;
 		case grid:
 			guideGrid.draw();
@@ -167,40 +169,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-ofPolyline ofApp::generatePerspectivalGrid() {
-	ofPolyline grid;
-
-	ofPoint center;
-	float horizontalPos = windowWidth / 2;
-	float verticalPos = windowHeight / 2;
-
-	center.set(horizontalPos, verticalPos);
-	float i = 0;
-	float r = windowWidth;
-
-	if (windowHeight > windowWidth) {
-		r = windowHeight;
-	}
-
-
-	while (i < TWO_PI) {
-		float x = horizontalPos + cos(i) * r;
-		float y = verticalPos + sin(i) * r;
-		ofPoint point;
-		point.set(x, y);
-		grid.addVertex(center);
-		grid.addVertex(point);
-		i += HALF_PI * 0.2;
-	}
-
-	grid.close();
-	return grid;
-}
-
-void ofApp::translatePerspectivalGrid(ofPoint vctr) {
-	perspectivalGrid.translate(vctr);
-}
-
 ofPolyline ofApp::generateGuideGrid(int horizontalCount, int verticalCount) {
 	ofPolyline grid;
 	int width = windowWidth;
@@ -290,35 +258,7 @@ void ofApp::handleArrowKeys(int key){
 	ofLog(OF_LOG_NOTICE, ofToString(key));
 	ofPoint translationVector;
 	switch (mode) {
-		case perspective:
-			{
-				switch (key) {
-					case OF_KEY_UP:
-						{
-							translationVector.set(0,-5);
-							translatePerspectivalGrid(translationVector);
-							break;
-						}
-					case OF_KEY_DOWN:
-						{
-							translationVector.set(0,5);
-							translatePerspectivalGrid(translationVector);
-							break;
-						}
-					case OF_KEY_LEFT:
-						{
-							translationVector.set(-5,0);
-							translatePerspectivalGrid(translationVector);
-							break;
-						}
-					case OF_KEY_RIGHT:
-						{
-							translationVector.set(5,0);
-							translatePerspectivalGrid(translationVector);
-							break;
-						}
-				}
-			}
+
 		case grid:
 			{
 				switch (key) {

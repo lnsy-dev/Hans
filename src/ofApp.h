@@ -1,7 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGLWarper.h"
+#include "warper.h"
+#include "perspectivalGrid.h"
 
 
 class ofApp : public ofBaseApp{
@@ -31,14 +32,13 @@ class ofApp : public ofBaseApp{
 
 		ofxGLWarper warper;
 
+		perspectivalGrid perspectiveGrid;
+
 		ofPolyline generateGuideGrid(int hCount, int vCount);
 		int guideGridHCount;
 		int guideGridVCount;
 
-		ofPolyline generatePerspectivalGrid();
-		ofPolyline perspectivalGrid;
 		ofPolyline guideGrid;
-		void translatePerspectivalGrid(ofPoint vctr);
 
 		bool SHIFTKEYPRESSED = false;
 		bool CTRLKEYPRESSED = false;
