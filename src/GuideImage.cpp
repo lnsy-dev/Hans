@@ -11,10 +11,14 @@ void GuideImage::setup(int w, int h, string filePath) {
   gui.add(warpCenter.setup("warp center", ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
   gui.setPosition(ofGetWindowWidth(), 0);
 
+  shader.load("shadersGL2/shader");
+
 }
 
 void GuideImage::draw(){
+  shader.begin();
   displayImage.draw(0,0);
+  shader.end();
 }
 
 void GuideImage::drawGui(){

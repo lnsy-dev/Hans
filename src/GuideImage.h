@@ -20,5 +20,7 @@ class GuideImage {
     ofxFloatSlider warpAmount;
     ofxVec2Slider warpCenter;
     ofxPanel gui;
+    ofShader shader;
+
 
 };
