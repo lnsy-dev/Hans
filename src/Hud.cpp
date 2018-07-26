@@ -7,6 +7,7 @@ void Hud::setup(){
     helptext << "(i): Image Mode"<<endl;
     helptext << "(w): Toggle Warp Corners" << endl;
     helptext << "(h): Toggle this dialog"<< endl;
+    helptext << "(r): Reset Warp and Mode" << endl;
 
 }
 

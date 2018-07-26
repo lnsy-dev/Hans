@@ -1,7 +1,7 @@
 #include "PerspectivalGrid.h"
 
 void PerspectivalGrid::setup(int w, int h){
-
+  grid.clear();
   ofPoint center;
   float horizontalPos = w / 2;
   float verticalPos = h / 2;

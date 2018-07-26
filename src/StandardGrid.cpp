@@ -1,6 +1,8 @@
 #include "StandardGrid.h"
 
 void StandardGrid::setup(int w, int h, int horizontalCount, int verticalCount){
+  grid.clear();
+
   int width = w;
   int height = h;
 

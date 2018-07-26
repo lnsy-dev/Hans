@@ -125,6 +125,12 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
+	windowWidth = ofGetWindowWidth();
+	windowHeight = ofGetWindowHeight();
+	warper.setup(0, 0, windowWidth, windowHeight); //initializates ofxGLWarper
+	perspectivalGrid.setup(windowWidth, windowHeight);
+	guideGrid.setup(windowWidth, windowHeight, 10, 10);
+	guideImage.resizeImage(w, h);
 
 }
 
