@@ -8,6 +8,7 @@ class GuideImage {
     void loadImage();
     void loadImage(string filePath);
     void resizeImage(int w, int h);
+    void handleKeyPress(int key);
 
   private:
     ofImage displayImage;

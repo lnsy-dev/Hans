@@ -30,3 +30,15 @@ void GuideImage::loadImage(){
 void GuideImage::loadImage(string filePath){
   displayImage.load(filePath);
 }
+
+void GuideImage::handleKeyPress(int key){
+  switch(key) {
+    case 'r':
+      resizeImage(ofGetWindowWidth(), ofGetWindowHeight());
+      break;
+    case 'o':
+      loadImage();
+    default:
+      break;
+  }
+}

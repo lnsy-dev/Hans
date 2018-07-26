@@ -5,6 +5,7 @@
 #include "PerspectivalGrid.h"
 #include "StandardGrid.h"
 #include "GuideImage.h"
+#include "Hud.h"
 
 
 class ofApp : public ofBaseApp{
@@ -27,8 +28,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 	private:
-		void drawHelpText();
 		bool SHOWHELP = true;
+		Hud hud;
 
 		enum Mode {perspective, grid, img};
 		Mode mode = perspective;
@@ -42,7 +43,7 @@ class ofApp : public ofBaseApp{
 		bool SHIFTKEYPRESSED = false;
 		bool CTRLKEYPRESSED = false;
 
-		void handleArrowKeys(int key);
+		void handleModuleKeys(int key);
 
 		int windowWidth = ofGetWindowWidth();
 		int windowHeight = ofGetWindowHeight();

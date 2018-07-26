@@ -10,10 +10,9 @@ void ofApp::setup(){
 	perspectivalGrid.setup(windowWidth, windowHeight);
 	guideGrid.setup(windowWidth, windowHeight, 10, 10);
 	guideImage.setup(windowWidth, windowHeight, "images/no-image.png");
+	hud.setup();
 
 	ofBackground(0, 0, 0);
-
-
 }
 
 //--------------------------------------------------------------
@@ -23,15 +22,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
 	if(SHOWHELP){
-		stringstream ss;
-		ss << "(p): Perspective Mode"<<endl;
-		ss << "(g): Grid Mode"<<endl;
-		ss << "(i): Image Mode"<<endl;
-		ss << "(o): Open an Image" <<endl;
-		ss << "(w): Toggle Warp Corners" << endl;
-		ss << "(h): Toggle this dialog"<<endl;
-		ofDrawBitmapStringHighlight(ss.str().c_str(), 20, 20);
+		hud.draw();
 	}
 
 	warper.begin();
@@ -66,20 +59,8 @@ void ofApp::keyPressed(int key){
 	case 2:
 		CTRLKEYPRESSED = true;
 		break;
-	case OF_KEY_LEFT:
-	case OF_KEY_RIGHT:
-	case OF_KEY_DOWN:
-	case OF_KEY_UP:
-		handleArrowKeys(key);
-		break;
 	case 'w':
-		if (warper.isActive()) {
-			warper.deactivate();
-		}
-		else {
-			warper.activate();
-		}
-
+		warper.toggleActive();
 		break;
 	case 'p':
 		mode = perspective;
@@ -90,20 +71,11 @@ void ofApp::keyPressed(int key){
 	case 'i':
 		mode = img;
 		break;
-	case 'r':
-		{
-			perspectivalGrid.setup(windowWidth, windowHeight);
-			guideGrid.setup(windowWidth, windowHeight, 10, 10);
-			guideImage.resizeImage(windowWidth, windowHeight);
-			break;
-		}
 	case 'h':
 		SHOWHELP = !SHOWHELP;
 		break;
-	case 'o':
-		guideImage.loadImage();
-		break;
 	default:
+		handleModuleKeys(key);
 		break;
 	}
 }
@@ -169,8 +141,20 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 // Each mode should handle Arrow Keys differently
 // @todo each mode needs to be abstracted out to its own class.
 // Once that is done the switch statement mess won't be necessary.
-void ofApp::handleArrowKeys(int key){
-	ofLog(OF_LOG_NOTICE, ofToString(key));
-	ofPoint translationVector;
+void ofApp::handleModuleKeys(int key){
+	switch (mode) {
+		case perspective:
+			// perspectivalGrid.handleKeyPress(key);
+			break;
+		case grid:
+			// guideGrid.handleKeyPress(key);
+			break;
+		case img:
+			guideImage.handleKeyPress(key);
+			break;
+		default:
+			break;
+	}
+
 
 }
