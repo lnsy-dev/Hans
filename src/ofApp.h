@@ -32,7 +32,7 @@ class ofApp : public ofBaseApp{
 		Hud hud;
 
 		enum Mode {perspective, grid, img};
-		Mode mode = perspective;
+		Mode mode = img;
 
 		ofxGLWarper warper;
 

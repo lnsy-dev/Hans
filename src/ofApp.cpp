@@ -23,27 +23,32 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	if(SHOWHELP){
-		hud.draw();
-	}
-
 	warper.begin();
 	warper.draw();
-	switch (mode) {
-		case perspective:
-			perspectivalGrid.draw();
-			break;
-		case grid:
-			guideGrid.draw();
-			break;
-		case img:
-			guideImage.draw();
-			break;
-		default:
-			break;
-	}
-		// put drawing code here
+		switch (mode) {
+			case perspective:
+				perspectivalGrid.draw();
+				break;
+			case grid:
+				guideGrid.draw();
+				break;
+			case img:
+				guideImage.draw();
+				break;
+			default:
+				break;
+		}
 	warper.end();
+
+	if(SHOWHELP){
+		switch (mode) {
+			case img:
+				guideImage.drawGui();
+			default:
+				hud.draw();
+		}
+	}
+
 
 }
 
