@@ -1,7 +1,7 @@
 #pragma once
 #include "ofMain.h"
 
-class standardGrid {
+class StandardGrid {
   public:
     void setup(int w, int h, int horizontalCount, int verticalCount);
     void draw();

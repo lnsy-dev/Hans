@@ -1,6 +1,6 @@
-#include "standardGrid.h"
+#include "StandardGrid.h"
 
-void standardGrid::setup(int w, int h, int horizontalCount, int verticalCount){
+void StandardGrid::setup(int w, int h, int horizontalCount, int verticalCount){
   int width = w;
   int height = h;
 
@@ -67,6 +67,6 @@ void standardGrid::setup(int w, int h, int horizontalCount, int verticalCount){
   grid.close();
 }
 
-void standardGrid::draw(){
+void StandardGrid::draw(){
   grid.draw();
 }

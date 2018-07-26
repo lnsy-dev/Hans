@@ -7,11 +7,12 @@ void ofApp::setup(){
 	warper.setup(0, 0, windowWidth, windowHeight); //initializates ofxGLWarper
 	warper.activate();
 
-	perspectiveGrid.setup(windowWidth, windowHeight);
+	perspectivalGrid.setup(windowWidth, windowHeight);
 	guideGrid.setup(windowWidth, windowHeight, 10, 10);
+	guideImage.setup(windowWidth, windowHeight, "images/no-image.png");
+
 	ofBackground(0, 0, 0);
 
-	loadImage("images/noimage.png");
 
 }
 
@@ -37,13 +38,13 @@ void ofApp::draw(){
 	warper.draw();
 	switch (mode) {
 		case perspective:
-			perspectiveGrid.draw();
+			perspectivalGrid.draw();
 			break;
 		case grid:
 			guideGrid.draw();
 			break;
 		case img:
-			displayImage.draw(0,0);
+			guideImage.draw();
 			break;
 		default:
 			break;
@@ -89,24 +90,19 @@ void ofApp::keyPressed(int key){
 	case 'i':
 		mode = img;
 		break;
+	case 'r':
+		{
+			perspectivalGrid.setup(windowWidth, windowHeight);
+			guideGrid.setup(windowWidth, windowHeight, 10, 10);
+			guideImage.resizeImage(windowWidth, windowHeight);
+			break;
+		}
 	case 'h':
 		SHOWHELP = !SHOWHELP;
 		break;
 	case 'o':
-			{
-			ofFileDialogResult openFileResult=ofSystemLoadDialog("Select a jpg or png");
-			if (openFileResult.bSuccess){
-				ofFile file (openFileResult.getPath());
-				if (file.exists()){
-					string fileExtension = ofToUpper(file.getExtension());
-					if (fileExtension == "JPG" || fileExtension == "PNG") {
-						loadImage(openFileResult.getPath());
-						mode = img;
-					}
-				}
-			}
-			break;
-		}
+		guideImage.loadImage();
+		break;
 	default:
 		break;
 	}
@@ -168,13 +164,6 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
-}
-
-
-void ofApp::loadImage(string filePath){
-	displayImage.load(filePath);
-
-	displayImage.resize(windowWidth, windowHeight);
 }
 
 // Each mode should handle Arrow Keys differently

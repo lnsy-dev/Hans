@@ -2,8 +2,9 @@
 
 #include "ofMain.h"
 #include "warper.h"
-#include "perspectivalGrid.h"
-#include "standardGrid.h"
+#include "PerspectivalGrid.h"
+#include "StandardGrid.h"
+#include "GuideImage.h"
 
 
 class ofApp : public ofBaseApp{
@@ -25,6 +26,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+	private:
 		void drawHelpText();
 		bool SHOWHELP = true;
 
@@ -33,17 +35,15 @@ class ofApp : public ofBaseApp{
 
 		ofxGLWarper warper;
 
-		perspectivalGrid perspectiveGrid;
-		standardGrid guideGrid;
+		PerspectivalGrid perspectivalGrid;
+		StandardGrid guideGrid;
+		GuideImage guideImage;
 
 		bool SHIFTKEYPRESSED = false;
 		bool CTRLKEYPRESSED = false;
 
 		void handleArrowKeys(int key);
 
-		void loadImage(string filePath);
-		ofImage displayImage;
-
-		int windowWidth = 2736;
-		int windowHeight = 1824;
+		int windowWidth = ofGetWindowWidth();
+		int windowHeight = ofGetWindowHeight();
 };

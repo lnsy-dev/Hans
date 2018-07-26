@@ -1,7 +1,7 @@
 #pragma once
 #include "ofMain.h"
 
-class perspectivalGrid {
+class PerspectivalGrid {
   public:
     void setup(int w, int h);
     void draw();

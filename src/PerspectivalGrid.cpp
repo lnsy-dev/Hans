@@ -1,6 +1,6 @@
-#include "perspectivalGrid.h"
+#include "PerspectivalGrid.h"
 
-void perspectivalGrid::setup(int w, int h){
+void PerspectivalGrid::setup(int w, int h){
 
   ofPoint center;
   float horizontalPos = w / 2;
@@ -28,6 +28,6 @@ void perspectivalGrid::setup(int w, int h){
   grid.close();
 }
 
-void perspectivalGrid::draw(){
+void PerspectivalGrid::draw(){
   grid.draw();
 }
