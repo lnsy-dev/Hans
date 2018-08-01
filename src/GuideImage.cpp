@@ -4,21 +4,19 @@
 void GuideImage::setup(int w, int h, string filePath) {
   loadImage(filePath);
   resizeImage(w, h);
-  warpAmount.addListener(this, &GuideImage::warpAmountChanged);
+  //warpAmount.addListener(this, &GuideImage::warpAmountChanged);
   // warpCenter.addListener(this, &GuideImage::warpCenterChanged);
-  gui.setup();
-  gui.add(warpAmount.setup("warp amount", 140, 10, 300));
-  gui.add(warpCenter.setup("warp center", ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
-  gui.setPosition(ofGetWindowWidth(), 0);
-
-  shader.load("shadersGL2/shader");
+  //gui.setup();
+  //gui.add(warpAmount.setup("warp amount", 140, 10, 300));
+  //gui.add(warpCenter.setup("warp center", ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
+  //gui.setPosition(ofGetWindowWidth(), 0);
 
 }
 
 void GuideImage::draw(){
-  shader.begin();
+//  shader.begin();
   displayImage.draw(0,0);
-  shader.end();
+//  shader.end();
 }
 
 void GuideImage::drawGui(){

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "warper.h"
+#include "ofxGLWarper.h"
 #include "PerspectivalGrid.h"
 #include "StandardGrid.h"
 #include "GuideImage.h"
