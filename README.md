@@ -1,5 +1,5 @@
 # Hans
-A projector assistant for painters and artists
+A projector assistant for painters and artists. To download the compiled executable, please visit the projects [homepage](http://lindseymysse.com/hans/)
 
 This is an [OpenFrameWorks](https://openframeworks.cc/) project. It requires the [ofxGLWarper](https://github.com/roymacdonald/ofxGLWarper) plugin by Roy Macdonald. 
 
